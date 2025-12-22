@@ -5,12 +5,15 @@
 			"name": "Linux (Debug)",
 			"includePath": [
 				"${workspaceFolder}/build/_deps/spdlog-src/include",
+				"${workspaceFolder}/build/_deps/glfw-src/include",
+				"${workspaceFolder}/Game/glad/include",
 				"${workspaceFolder}/Game/include",
 				"/usr/include",
 				"/usr/local/include"
 			],
 			"defines": [
 				"DEBUG",
+				"GLFW_INCLUDE_NONE",
 				"LOGGING_ENABLED",
 				"ASSERTS_ENABLED"
 			],
