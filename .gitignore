@@ -39,3 +39,14 @@
 
 # debug information files
 *.dwo
+
+# VS
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+
+build/
+
+.vscode/settings.json
