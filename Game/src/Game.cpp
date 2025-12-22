@@ -13,6 +13,7 @@ static constexpr unsigned int WindowWidth = 1280;
 static constexpr unsigned int WindowHeight = 720;
 
 Game::Game() :
+	mRegistry(),
 	mWindow(nullptr)
 {}
 

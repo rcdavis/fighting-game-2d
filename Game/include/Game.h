@@ -1,5 +1,7 @@
 #pragma once
 
+#include "entt/entt.hpp"
+
 struct GLFWwindow;
 
 class Game {
@@ -14,5 +16,6 @@ private:
 	void Shutdown();
 
 private:
+	entt::registry mRegistry;
 	GLFWwindow* mWindow;
 };

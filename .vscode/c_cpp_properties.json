@@ -7,6 +7,7 @@
 				"${workspaceFolder}/build/_deps/spdlog-src/include",
 				"${workspaceFolder}/build/_deps/glfw-src/include",
 				"${workspaceFolder}/build/_deps/glm-src",
+				"${workspaceFolder}/build/_deps/entt-src/src",
 				"${workspaceFolder}/Game/glad/include",
 				"${workspaceFolder}/Game/include",
 				"/usr/include",
