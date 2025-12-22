@@ -9,6 +9,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glfw)
 
+FetchContent_Declare(
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG 1.0.2
+)
+FetchContent_MakeAvailable(glm)
+
 set(SPDLOG_HEADER_ONLY ON CACHE BOOL "" FORCE)
 set(SPDLOG_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 set(SPDLOG_BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
@@ -50,6 +57,7 @@ cmake_policy(SET CMP0072 NEW)
 find_package(OpenGL REQUIRED)
 
 target_link_libraries(Game PRIVATE
+    glm::glm
     glfw
     OpenGL::GL
     spdlog::spdlog_header_only
