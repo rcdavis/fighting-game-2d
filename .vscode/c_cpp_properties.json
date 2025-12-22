@@ -4,11 +4,15 @@
 		{
 			"name": "Linux (Debug)",
 			"includePath": [
+				"${workspaceFolder}/build/_deps/spdlog-src/include",
+				"${workspaceFolder}/Game/include",
 				"/usr/include",
 				"/usr/local/include"
 			],
 			"defines": [
-				"DEBUG"
+				"DEBUG",
+				"LOGGING_ENABLED",
+				"ASSERTS_ENABLED"
 			],
 			"compilerPath": "/usr/bin/g++",
 			"cStandard": "c17",
