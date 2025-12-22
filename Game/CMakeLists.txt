@@ -16,6 +16,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(spdlog)
 
 add_executable(Game
+    glad/src/gl.c
     src/Utils/Log.cpp
     src/Main.cpp
 )
@@ -30,6 +31,7 @@ endif()
 
 target_include_directories(Game PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/glad/include
 )
 
 target_link_libraries(Game PRIVATE
