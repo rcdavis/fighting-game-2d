@@ -2,6 +2,13 @@ project(Game)
 
 include(FetchContent)
 
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG 3.4
+)
+FetchContent_MakeAvailable(glfw)
+
 set(SPDLOG_HEADER_ONLY ON CACHE BOOL "" FORCE)
 set(SPDLOG_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 set(SPDLOG_BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
@@ -21,6 +28,10 @@ add_executable(Game
     src/Main.cpp
 )
 
+target_compile_definitions(Game PUBLIC
+    GLFW_INCLUDE_NONE
+)
+
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(Game PUBLIC
         DEBUG
@@ -34,6 +45,11 @@ target_include_directories(Game PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/glad/include
 )
 
+cmake_policy(SET CMP0072 NEW)
+find_package(OpenGL REQUIRED)
+
 target_link_libraries(Game PRIVATE
+    glfw
+    OpenGL::GL
     spdlog::spdlog_header_only
 )
