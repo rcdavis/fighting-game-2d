@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "Components.h"
 #include "Utils/Log.h"
 
 #include "glad/gl.h"
@@ -32,9 +33,6 @@ void Game::Run() {
 		return;
 	}
 
-	const glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(300.0f, 300.0f, 0.0f)) *
-		glm::scale(glm::mat4(1.0f), glm::vec3(50.0f, 50.0f, 1.0f));
-
 	while (!glfwWindowShouldClose(mWindow)) {
 		glfwPollEvents();
 
@@ -42,7 +40,9 @@ void Game::Run() {
 
 		Renderer2D::BeginScene(mCamera);
 
-		Renderer2D::DrawQuad(transform, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+		mRegistry.view<TransformComponent, ColorComponent>().each([](const TransformComponent& tc, const ColorComponent& cc) {
+			Renderer2D::DrawQuad(tc.GetTransform(), cc.color);
+		});
 
 		Renderer2D::EndScene();
 
@@ -106,6 +106,11 @@ bool Game::Init() {
 
 	Renderer2D::Init();
 
+	AddColoredRect(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec3(50.0f, 50.0f, 1.0f),
+		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	AddColoredRect(glm::vec3(600.0f, 200.0f, 0.0f), glm::vec3(200.0f, 200.0f, 1.0f),
+		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+
 	return true;
 }
 
@@ -114,6 +119,13 @@ void Game::Shutdown() {
 
 	glfwTerminate();
 	mWindow = nullptr;
+}
+
+entt::entity Game::AddColoredRect(const glm::vec3& pos, const glm::vec3& scale, const glm::vec4& color) {
+	auto e = mRegistry.create();
+	mRegistry.emplace<TransformComponent>(e, pos, scale);
+	mRegistry.emplace<ColorComponent>(e, color);
+	return e;
 }
 
 void GlfwErrorCallback(int error, const char* description) {
