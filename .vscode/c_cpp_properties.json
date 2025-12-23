@@ -9,6 +9,7 @@
 				"${workspaceFolder}/build/_deps/glm-src",
 				"${workspaceFolder}/build/_deps/entt-src/src",
 				"${workspaceFolder}/Game/glad/include",
+				"${workspaceFolder}/Game/stb/include",
 				"${workspaceFolder}/Game/include",
 				"/usr/include",
 				"/usr/local/include"
