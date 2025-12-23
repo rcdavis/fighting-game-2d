@@ -106,9 +106,9 @@ bool Game::Init() {
 
 	Renderer2D::Init();
 
-	AddColoredRect(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec3(50.0f, 50.0f, 1.0f),
+	AddColoredRect(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec2(50.0f, 50.0f),
 		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	AddColoredRect(glm::vec3(600.0f, 200.0f, 0.0f), glm::vec3(200.0f, 200.0f, 1.0f),
+	AddColoredRect(glm::vec3(600.0f, 200.0f, 0.0f), glm::vec2(200.0f, 200.0f),
 		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
 
 	return true;
@@ -121,7 +121,7 @@ void Game::Shutdown() {
 	mWindow = nullptr;
 }
 
-entt::entity Game::AddColoredRect(const glm::vec3& pos, const glm::vec3& scale, const glm::vec4& color) {
+entt::entity Game::AddColoredRect(const glm::vec3& pos, const glm::vec2& scale, const glm::vec4& color) {
 	auto e = mRegistry.create();
 	mRegistry.emplace<TransformComponent>(e, pos, scale);
 	mRegistry.emplace<ColorComponent>(e, color);
