@@ -110,6 +110,8 @@ bool Game::Init() {
 		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	AddColoredRect(glm::vec3(600.0f, 200.0f, 0.0f), glm::vec2(200.0f, 200.0f),
 		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	AddColoredRect(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100.0f, 150.0f),
+		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	return true;
 }
