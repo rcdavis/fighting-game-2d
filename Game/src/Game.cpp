@@ -20,6 +20,7 @@ static constexpr uint16_t WindowHeight = 720;
 Game::Game() :
 	mCamera(0.0f, WindowWidth, WindowHeight, 0.0f),
 	mRegistry(),
+	mDirIconTexture(nullptr),
 	mWindow(nullptr)
 {}
 
@@ -40,8 +41,9 @@ void Game::Run() {
 
 		Renderer2D::BeginScene(mCamera);
 
-		mRegistry.view<TransformComponent, ColorComponent>().each([](const TransformComponent& tc, const ColorComponent& cc) {
-			Renderer2D::DrawQuad(tc.GetTransform(), cc.color);
+		mRegistry.view<TransformComponent, ColorComponent>().each([&](const TransformComponent& tc, const ColorComponent& cc) {
+			//Renderer2D::DrawQuad(tc.GetTransform(), cc.color);
+			Renderer2D::DrawSprite(tc.GetTransform(), mDirIconTexture, cc.color);
 		});
 
 		Renderer2D::EndScene();
@@ -106,15 +108,24 @@ bool Game::Init() {
 
 	Renderer2D::Init();
 
-	AddColoredRect(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec2(50.0f, 50.0f),
+	mDirIconTexture = GLTexture::Load("res/textures/DirectoryIcon.png");
+
+	AddColoredRect(glm::vec3(0.0f), glm::vec2(256.0f), glm::vec4(1.0f));
+	AddColoredRect(glm::vec3(256.0f, 0.0f, 0.0f), glm::vec2(256.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+
+	/*AddColoredRect(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec2(50.0f, 50.0f),
 		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 	AddColoredRect(glm::vec3(600.0f, 200.0f, 0.0f), glm::vec2(200.0f, 200.0f),
 		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	AddColoredRect(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100.0f, 150.0f),
+		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));*/
 
 	return true;
 }
 
 void Game::Shutdown() {
+	mDirIconTexture = nullptr;
+
 	Renderer2D::Shutdown();
 
 	glfwTerminate();

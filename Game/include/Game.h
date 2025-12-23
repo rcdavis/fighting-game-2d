@@ -1,7 +1,10 @@
 #pragma once
 
+#include <memory>
+
 #include "entt/entt.hpp"
 #include "Render/OrthographicCamera.h"
+#include "Render/OpenGL/GLTexture.h"
 
 struct GLFWwindow;
 
@@ -21,5 +24,6 @@ private:
 private:
 	OrthographicCamera mCamera;
 	entt::registry mRegistry;
+	std::shared_ptr<GLTexture> mDirIconTexture;
 	GLFWwindow* mWindow;
 };
