@@ -128,11 +128,10 @@ namespace Renderer2D {
 		s_Data.quadVertexBufferPtr = std::data(s_Data.quadVertexBufferBase);
 	}
 
-	void DrawSprite(const glm::mat4& transform, const std::shared_ptr<GLTexture>& texture) {
+	void DrawSprite(const glm::mat4& transform, const std::shared_ptr<GLTexture>& texture, const glm::vec4& color) {
 		if (s_Data.quadIndexCount >= s_Data.MaxIndices)
 			Flush();
 
-		constexpr glm::vec4 color(1.0f, 1.0f, 1.0f, 1.0f);
 		constexpr std::array<glm::vec2, 4> texCoords = {
 			glm::vec2 { 0.0f, 0.0f }, glm::vec2 { 1.0f, 0.0f },
 			glm::vec2 { 1.0f, 1.0f }, glm::vec2 { 0.0f, 1.0f }

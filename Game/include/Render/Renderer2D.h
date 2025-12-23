@@ -17,7 +17,7 @@ namespace Renderer2D {
 
 	void Flush();
 
-	void DrawSprite(const glm::mat4& transform, const std::shared_ptr<GLTexture>& texture);
+	void DrawSprite(const glm::mat4& transform, const std::shared_ptr<GLTexture>& texture, const glm::vec4& color);
 
 	void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
 }

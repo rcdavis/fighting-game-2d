@@ -43,7 +43,7 @@ void Game::Run() {
 
 		mRegistry.view<TransformComponent, ColorComponent>().each([&](const TransformComponent& tc, const ColorComponent& cc) {
 			//Renderer2D::DrawQuad(tc.GetTransform(), cc.color);
-			Renderer2D::DrawSprite(tc.GetTransform(), mDirIconTexture);
+			Renderer2D::DrawSprite(tc.GetTransform(), mDirIconTexture, cc.color);
 		});
 
 		Renderer2D::EndScene();
@@ -110,9 +110,8 @@ bool Game::Init() {
 
 	mDirIconTexture = GLTexture::Load("res/textures/DirectoryIcon.png");
 
-	auto e = mRegistry.create();
-	mRegistry.emplace<TransformComponent>(e, glm::vec3(0.0f), glm::vec2(512.0f));
-	mRegistry.emplace<ColorComponent>(e, glm::vec4(1.0f));
+	AddColoredRect(glm::vec3(0.0f), glm::vec2(256.0f), glm::vec4(1.0f));
+	AddColoredRect(glm::vec3(256.0f, 0.0f, 0.0f), glm::vec2(256.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
 	/*AddColoredRect(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec2(50.0f, 50.0f),
 		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));

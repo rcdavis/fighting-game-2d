@@ -26,7 +26,6 @@ GLTexture::GLTexture() {
 
 GLTexture::GLTexture(const std::filesystem::path& filepath) {
 	int width, height, channels;
-	stbi_set_flip_vertically_on_load(1);
 	stbi_uc* const data = stbi_load(filepath.c_str(), &width, &height, &channels, 0);
 	if (!data) {
 		LOG_ERROR("Failed to load image {0}", filepath.c_str());
