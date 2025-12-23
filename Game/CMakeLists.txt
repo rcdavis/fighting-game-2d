@@ -41,6 +41,7 @@ add_executable(Game
     src/Render/OpenGL/GLBuffer.cpp
     src/Render/OpenGL/GLShader.cpp
     src/Render/OpenGL/GLTexture.cpp
+    src/Render/OpenGL/GLVertexArray.cpp
     src/Render/OrthographicCamera.cpp
     src/Render/Renderer2D.cpp
     src/Utils/Log.cpp
