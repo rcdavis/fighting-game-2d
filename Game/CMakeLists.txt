@@ -50,6 +50,9 @@ add_executable(Game
     stb/src/stb_image.c
 )
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/res
+     DESTINATION ${CMAKE_BINARY_DIR}/Game)
+
 target_compile_definitions(Game PUBLIC
     GLFW_INCLUDE_NONE
 )

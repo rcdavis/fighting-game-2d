@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entt/entt.hpp"
+#include "Render/OrthographicCamera.h"
 
 struct GLFWwindow;
 
@@ -16,6 +17,7 @@ private:
 	void Shutdown();
 
 private:
+	OrthographicCamera mCamera;
 	entt::registry mRegistry;
 	GLFWwindow* mWindow;
 };

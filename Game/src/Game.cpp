@@ -5,6 +5,10 @@
 #include "glad/gl.h"
 #include "GLFW/glfw3.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "Render/Renderer2D.h"
+
 static void GlfwErrorCallback(int error, const char* description);
 static void APIENTRY GLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
 	GLsizei length, const GLchar* message, const void* userParam);
@@ -13,6 +17,7 @@ static constexpr uint16_t WindowWidth = 1280;
 static constexpr uint16_t WindowHeight = 720;
 
 Game::Game() :
+	mCamera(0.0f, WindowWidth, WindowHeight, 0.0f),
 	mRegistry(),
 	mWindow(nullptr)
 {}
@@ -27,10 +32,19 @@ void Game::Run() {
 		return;
 	}
 
+	const glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(300.0f, 300.0f, 0.0f)) *
+		glm::scale(glm::mat4(1.0f), glm::vec3(50.0f, 50.0f, 1.0f));
+
 	while (!glfwWindowShouldClose(mWindow)) {
 		glfwPollEvents();
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		Renderer2D::BeginScene(mCamera);
+
+		Renderer2D::DrawQuad(transform, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+
+		Renderer2D::EndScene();
 
 		glfwSwapBuffers(mWindow);
 	}
@@ -90,10 +104,14 @@ bool Game::Init() {
 
 	glEnable(GL_DEPTH_TEST);
 
+	Renderer2D::Init();
+
 	return true;
 }
 
 void Game::Shutdown() {
+	Renderer2D::Shutdown();
+
 	glfwTerminate();
 	mWindow = nullptr;
 }
