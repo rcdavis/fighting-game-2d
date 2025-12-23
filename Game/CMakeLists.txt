@@ -38,6 +38,7 @@ FetchContent_MakeAvailable(spdlog)
 
 add_executable(Game
     glad/src/gl.c
+    src/Render/OrthographicCamera.cpp
     src/Utils/Log.cpp
     src/Game.cpp
     src/Main.cpp
