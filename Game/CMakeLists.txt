@@ -39,11 +39,13 @@ FetchContent_MakeAvailable(spdlog)
 add_executable(Game
     glad/src/gl.c
     src/Render/OpenGL/GLBuffer.cpp
+    src/Render/OpenGL/GLTexture.cpp
     src/Render/OrthographicCamera.cpp
     src/Render/Renderer2D.cpp
     src/Utils/Log.cpp
     src/Game.cpp
     src/Main.cpp
+    stb/src/stb_image.c
 )
 
 target_compile_definitions(Game PUBLIC
@@ -61,6 +63,7 @@ endif()
 target_include_directories(Game PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/glad/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/stb/include
 )
 
 cmake_policy(SET CMP0072 NEW)
