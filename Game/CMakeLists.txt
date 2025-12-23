@@ -39,6 +39,7 @@ FetchContent_MakeAvailable(spdlog)
 add_executable(Game
     glad/src/gl.c
     src/Render/OpenGL/GLBuffer.cpp
+    src/Render/OpenGL/GLShader.cpp
     src/Render/OpenGL/GLTexture.cpp
     src/Render/OrthographicCamera.cpp
     src/Render/Renderer2D.cpp
