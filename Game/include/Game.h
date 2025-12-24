@@ -21,6 +21,8 @@ private:
 
 	entt::entity AddColoredRect(const glm::vec3& pos, const glm::vec2& scale, const glm::vec4& color);
 
+	void QueryRenderSpecs();
+
 private:
 	OrthographicCamera mCamera;
 	entt::registry mRegistry;

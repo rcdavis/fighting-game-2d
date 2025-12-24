@@ -82,14 +82,6 @@ bool Game::Init() {
 	}
 
 #ifdef DEBUG
-	GLint glMajorVer = 0, glMinorVer = 0;
-	glGetIntegerv(GL_MAJOR_VERSION, &glMajorVer);
-	glGetIntegerv(GL_MINOR_VERSION, &glMinorVer);
-	LOG_INFO("OpenGL Info:");
-	LOG_INFO("  Vendor: {0}", (char*)glGetString(GL_VENDOR));
-	LOG_INFO("  Renderer: {0}", (char*)glGetString(GL_RENDERER));
-	LOG_INFO("  Version: {0}.{1}", glMajorVer, glMinorVer);
-
 	if (GLAD_GL_KHR_debug) {
 		LOG_INFO("Setting up OpenGL debug callback...");
 		glEnable(GL_DEBUG_OUTPUT);
@@ -99,6 +91,8 @@ bool Game::Init() {
 		LOG_INFO("Unable to use OpenGL debug callback");
 	}
 #endif
+
+	QueryRenderSpecs();
 
 	glfwSwapInterval(1);
 
@@ -112,13 +106,6 @@ bool Game::Init() {
 
 	AddColoredRect(glm::vec3(0.0f), glm::vec2(256.0f), glm::vec4(1.0f));
 	AddColoredRect(glm::vec3(256.0f, 0.0f, 0.0f), glm::vec2(256.0f), glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-
-	/*AddColoredRect(glm::vec3(300.0f, 300.0f, 0.0f), glm::vec2(50.0f, 50.0f),
-		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-	AddColoredRect(glm::vec3(600.0f, 200.0f, 0.0f), glm::vec2(200.0f, 200.0f),
-		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
-	AddColoredRect(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(100.0f, 150.0f),
-		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));*/
 
 	return true;
 }
@@ -137,6 +124,51 @@ entt::entity Game::AddColoredRect(const glm::vec3& pos, const glm::vec2& scale, 
 	mRegistry.emplace<TransformComponent>(e, pos, scale);
 	mRegistry.emplace<ColorComponent>(e, color);
 	return e;
+}
+
+void Game::QueryRenderSpecs() {
+	GLint glMajorVer = 0, glMinorVer = 0;
+	glGetIntegerv(GL_MAJOR_VERSION, &glMajorVer);
+	glGetIntegerv(GL_MINOR_VERSION, &glMinorVer);
+	LOG_INFO("OpenGL Info:");
+	LOG_INFO("  Vendor: {0}", (char*)glGetString(GL_VENDOR));
+	LOG_INFO("  Renderer: {0}", (char*)glGetString(GL_RENDERER));
+	LOG_INFO("  Version: {0}.{1}", glMajorVer, glMinorVer);
+
+	GLint ctxProfileMask = 0;
+	glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &ctxProfileMask);
+	if (ctxProfileMask & GL_CONTEXT_CORE_PROFILE_BIT)
+		LOG_INFO("  Profile: Core");
+	else if (ctxProfileMask & GL_CONTEXT_COMPATIBILITY_PROFILE_BIT)
+		LOG_INFO("  Profile: Compat");
+
+	GLint flags = 0;
+	glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+
+	std::vector<std::string> infoFlags;
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+		infoFlags.emplace_back("Debug");
+	if (flags & GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT)
+		infoFlags.emplace_back("Forward-Compat");
+
+	if (std::size(infoFlags) > 1) {
+		std::string flagText = infoFlags[0];
+		for (const auto& t : infoFlags) {
+			flagText += " | " + t;
+		}
+
+		LOG_INFO("  Context Flags: {0}", flagText.c_str());
+	} else if (std::size(infoFlags) == 1) {
+		LOG_INFO("  Context Flags: {0}", infoFlags[0].c_str());
+	}
+
+	GLint maxTextureSize = 0;
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+	LOG_INFO("  Max Texture Size: {0}", maxTextureSize);
+
+	GLint maxRbSize = 0;
+	glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE, &maxRbSize);
+	LOG_INFO("  Max Renderbuffer Size: {0}", maxRbSize);
 }
 
 void GlfwErrorCallback(int error, const char* description) {
